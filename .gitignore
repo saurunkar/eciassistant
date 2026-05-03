@@ -1,0 +1,76 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.env
+!.env.example
+*.egg-info/
+dist/
+build/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node / pnpm
+node_modules/
+.pnpm-store/
+dist/
+.cache/
+*.local
+
+# Frontend env
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+!frontend/.env.example
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# Terraform
+infra/.terraform/
+infra/*.tfstate
+infra/*.tfstate.backup
+infra/.terraform.lock.hcl
+infra/terraform.tfvars
+!infra/terraform.tfvars.example
+
+# GCP / credentials — NEVER commit these
+*.json
+!package.json
+!tsconfig*.json
+!vite.config*.json
+service-account-key.json
+gcp-key.json
+credentials.json
+application_default_credentials.json
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.dockerignore
+
+# Logs
+*.log
+logs/

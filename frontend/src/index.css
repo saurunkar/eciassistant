@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-saffron: #FF9933;
+    --color-green: #138808;
+    --color-navy: #000080;
+    --surface-0: #0D1117;
+    --surface-1: #161B22;
+    --surface-2: #1C2230;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-gray-100 antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    background: linear-gradient(135deg, #0D1117 0%, #0f1623 50%, #0D1117 100%);
+    min-height: 100vh;
+  }
+
+  * {
+    @apply box-border;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #161B22;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 153, 51, 0.4);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 153, 51, 0.7);
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply rounded-2xl border border-white/10 backdrop-blur-sm;
+    background: rgba(22, 27, 34, 0.8);
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300;
+    &:hover {
+      background: rgba(28, 34, 48, 0.9);
+      border-color: rgba(255, 153, 51, 0.3);
+      box-shadow: 0 0 20px rgba(255, 153, 51, 0.08);
+    }
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 rounded-xl font-semibold text-white transition-all duration-200;
+    background: linear-gradient(135deg, #FF9933, #E8891E);
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #FFB347, #FF9933);
+      box-shadow: 0 0 20px rgba(255, 153, 51, 0.4);
+      transform: translateY(-1px);
+    }
+    &:disabled {
+      @apply opacity-50 cursor-not-allowed;
+    }
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200;
+  }
+
+  .tab-active {
+    @apply text-white font-semibold;
+    background: linear-gradient(135deg, rgba(255,153,51,0.15), rgba(19,136,8,0.1));
+    border-color: rgba(255,153,51,0.4);
+    box-shadow: 0 0 12px rgba(255,153,51,0.15);
+  }
+
+  .typing-dot {
+    @apply inline-block w-2 h-2 rounded-full bg-saffron-500;
+    animation: typing 1.2s ease-in-out infinite;
+  }
+
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  .saffron-text {
+    background: linear-gradient(135deg, #FF9933, #FFD700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .india-flag-bar {
+    height: 3px;
+    background: linear-gradient(to right, #FF9933 33.3%, white 33.3%, white 66.6%, #138808 66.6%);
+  }
+
+  .message-bubble-user {
+    background: linear-gradient(135deg, rgba(255,153,51,0.2), rgba(255,153,51,0.1));
+    border: 1px solid rgba(255,153,51,0.25);
+  }
+
+  .message-bubble-ai {
+    background: rgba(22, 27, 34, 0.9);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .prose-election {
+    @apply text-gray-200 leading-relaxed;
+    p { @apply mb-3 last:mb-0; }
+    strong { @apply text-saffron-400 font-semibold; }
+    ul { @apply list-disc list-inside space-y-1 mb-3; }
+    ol { @apply list-decimal list-inside space-y-1 mb-3; }
+    li { @apply text-gray-300; }
+    a { @apply text-saffron-400 hover:text-saffron-500 underline; }
+    h1, h2, h3 { @apply text-white font-bold mb-2 mt-4 first:mt-0; }
+    code { @apply bg-surface-2 rounded px-1 py-0.5 text-sm font-mono text-saffron-400; }
+    blockquote { @apply border-l-2 border-saffron-500 pl-4 text-gray-400 italic; }
+  }
+
+  .glow-saffron {
+    box-shadow: 0 0 20px rgba(255, 153, 51, 0.25), 0 0 60px rgba(255, 153, 51, 0.08);
+  }
+
+  .shimmer-bg {
+    background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+}

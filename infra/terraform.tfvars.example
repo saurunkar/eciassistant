@@ -1,0 +1,7 @@
+# Copy this to terraform.tfvars and fill in your values
+project_id                 = "YOUR-GCP-PROJECT-ID"
+region                     = "asia-south1"
+environment                = "production"
+cors_origins               = "https://YOUR-FIREBASE-APP.web.app"
+vertex_ai_search_engine_id = ""   # leave blank to use built-in KB; fill in after Vertex AI Search setup
+image_tag                  = "latest"
