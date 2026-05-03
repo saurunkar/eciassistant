@@ -27,32 +27,42 @@ async def _stream_sse(
     """Yield SSE-formatted chunks, then a final [DONE] event."""
     full_answer = ""
 
-    async for chunk in gemini.generate_answer(
-        question=chat_req.message,
-        language=chat_req.language,
-        rag_context=rag_context,
-    ):
-        full_answer += chunk
-        payload = json.dumps({"chunk": chunk, "message_id": message_id})
-        yield f"data: {payload}\n\n"
+    try:
+        async for chunk in gemini.generate_answer(
+            question=chat_req.message,
+            language=chat_req.language,
+            rag_context=rag_context,
+        ):
+            full_answer += chunk
+            payload = json.dumps({"chunk": chunk, "message_id": message_id})
+            yield f"data: {payload}\n\n"
 
-    # Final event with sources
-    sources = [
-        SourceCitation(
-            title=c.title,
-            url=c.url,
-            excerpt=c.content[:120] if hasattr(c, "content") else "",
-        ).model_dump()
-        for c in rag_chunks
-    ] if rag_chunks else [{"title": "Election Commission of India", "url": "https://eci.gov.in", "excerpt": ""}]
+        # Final event with sources
+        sources = [
+            SourceCitation(
+                title=c.title,
+                url=c.url,
+                excerpt=c.content[:120] if hasattr(c, "content") else "",
+            ).model_dump()
+            for c in rag_chunks
+        ] if rag_chunks else [{"title": "Election Commission of India", "url": "https://eci.gov.in", "excerpt": ""}]
 
-    final = json.dumps({
-        "done": True,
-        "message_id": message_id,
-        "sources": sources,
-        "language": chat_req.language,
-    })
-    yield f"data: {final}\n\n"
+        final = json.dumps({
+            "done": True,
+            "message_id": message_id,
+            "sources": sources,
+            "language": chat_req.language,
+        })
+        yield f"data: {final}\n\n"
+
+    except Exception as e:
+        import asyncio
+        if isinstance(e, asyncio.CancelledError):
+            logger.info("Client disconnected during stream", extra={"session_id": chat_req.session_id[:8]})
+            raise e
+        logger.error(f"Stream error: {e}")
+        yield f"data: {json.dumps({'chunk': ' [Connection Error]'})}\n\n"
+        yield f"data: {json.dumps({'done': True, 'message_id': message_id})}\n\n"
 
     # Increment message count (fire-and-forget, no await needed here)
     logger.info(

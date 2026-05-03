@@ -60,7 +60,8 @@ async def retrieve_context(question: str, top_k: int = 5) -> tuple[str, list[Rag
             ),
         )
 
-        response = client.search(request)
+        import asyncio
+        response = await asyncio.to_thread(client.search, request)
         chunks: list[RagChunk] = []
 
         for result in response.results:

@@ -282,8 +282,8 @@ async def generate_answer(
         prompt = f"{context_block}{lang_instr}\n\nQuestion: {question}"
 
         cfg = GenerationConfig(temperature=0.2, max_output_tokens=1024, top_p=0.8)
-        response = await asyncio.to_thread(model.generate_content, prompt, generation_config=cfg, stream=True)
-        for chunk in response:
+        response = await model.generate_content_async(prompt, generation_config=cfg, stream=True)
+        async for chunk in response:
             if chunk.text:
                 yield chunk.text
 
